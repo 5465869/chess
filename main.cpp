@@ -10,6 +10,7 @@ using namespace std;
 int main()
 {
   ChessBoard chessboard;
+  string userchoice;
   int r_current, c_current, r_move, c_move;
   while(userchoice == "yes"){
     chessboard.print_board();
@@ -40,6 +41,7 @@ int main()
       cout<<"Not a legal bishop move please try again"<<endl;
     }
     chessboard.print_board();
-    
+    cout<<"Would you like to continue?"<<endl;
+    cin>>userchoice;
   }
 }
