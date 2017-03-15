@@ -36,8 +36,12 @@ int main()
           cout<<"Not a legal pawn move please try again"<<endl;
       }
     }
-    if((chessboard.get_board(r_current, c_current) == chessboard.get_white().get_bishop()) || (chessboard.get_board(r_current, c_current) == chessboard.get_black().get_bishop())){
+    if(chessboard.get_board(r_current, c_current) == chessboard.get_white().get_bishop()){
       chessboard.set_board(r_move, c_move, chessboard.get_white().get_bishop());
+      chessboard.set_board(r_current, c_current, chessboard.get_empty());
+    }
+    if((chessboard.get_board(r_current, c_current) == chessboard.get_black().get_bishop())){
+      chessboard.set_board(r_move, c_move, chessboard.get_black().get_bishop());
       chessboard.set_board(r_current, c_current, chessboard.get_empty());
     }else{
       cout<<"Not a legal bishop move please try again"<<endl;
