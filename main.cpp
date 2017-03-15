@@ -12,6 +12,8 @@ int main()
   ChessBoard chessboard;
   string userchoice;
   int r_current, c_current, r_move, c_move;
+  cout<<"Would you like to start?"<<endl;
+  cin>>userchoice;
   while(userchoice == "yes"){
     chessboard.print_board();
     cout<<"Please enter the location of the piece to be moved then the place you would like to move it"<<endl;;
