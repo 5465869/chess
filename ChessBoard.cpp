@@ -179,7 +179,11 @@ bool ChessBoard::legal_rook_move(int r_current, int c_current, int r_move, int c
   
 }
 bool ChessBoard::legal_bishop_move(int r_current, int c_current, int r_move, int c_move){
-
+  if(((c_current-c_move+2)/(r_current-r_move+2) == 1 || (c_current-c_move+2)/(r_current - r_move) == -1)){
+    return true;
+  }else{
+    return false;
+  }
 }
 bool ChessBoard::legal_knight_move(int r_current, int c_current, int r_move, int c_move){
 
