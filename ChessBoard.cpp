@@ -41,15 +41,7 @@ ChessBoard::ChessBoard(){
   }
 }
 ChessBoard::~ChessBoard(){
-  cout<<"Destructor entered"<<endl;
-  Rows = 0;
-  Cols = 0;
-  Empty = ' ';
-  for(int i = 0; i<MAX_ROWS; i++){
-    for(int j = 0; j<MAX_COLS; j++){
-      Board[i][j] = Empty;
-    }
-  }
+
 }
 int ChessBoard::get_rows(){
   return Rows;
@@ -176,7 +168,7 @@ bool ChessBoard::legal_queen_move(int r_current, int c_current, int r_move, int 
 
 }
 bool ChessBoard::legal_rook_move(int r_current, int c_current, int r_move, int c_move){
-  
+
 }
 bool ChessBoard::legal_bishop_move(int r_current, int c_current, int r_move, int c_move){
   if(((c_current-c_move+2)/(r_current-r_move+2) == 1 || (c_current-c_move+2)/(r_current - r_move) == -1)){
