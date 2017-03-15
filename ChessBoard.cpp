@@ -176,7 +176,7 @@ bool ChessBoard::legal_queen_move(int r_current, int c_current, int r_move, int 
 
 }
 bool ChessBoard::legal_rook_move(int r_current, int c_current, int r_move, int c_move){
-
+  
 }
 bool ChessBoard::legal_bishop_move(int r_current, int c_current, int r_move, int c_move){
 
