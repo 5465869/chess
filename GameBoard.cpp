@@ -1,16 +1,46 @@
-#include "GameBoard.h"
+#include "ChessBoard.h"
 
-GameBoard::GameBoard(){
-  Rows = 0;
-  Cols = 0;
-  Empty = ' ';
-  for(int i = 0; i<MAX_ROWS; i++){
-    for(int j = 0; j<MAX_COLS; j++){
-      Board[i][j] = Empty;
+ChessBoard::ChessBoard(){
+  Rows = 8;
+  Cols = 8;
+  Empty = '+';
+  black.set_all_pieces("BK","BQ","BR","BB","Bk","BP");
+  white.set_all_pieces("WK","WQ","WR","WB","Wk","WP");
+  for(int c = 0; c<Cols; c++){
+    Board[1][c] = white.get_pawn();
+  }
+  for(int c = 0; c<Cols; c++){
+    Board[6][c] = black.get_pawn();
+  }
+  for(int c = 0; c<Cols; c++){
+    if(c == 0 || c == 7){
+      Board[0][c] = white.get_rook();
+      Board[7][c] = black.get_rook();
+    }
+    if(c == 1 || c == 6){
+      Board[0][c] = white.get_knight();
+      Board[7][c] = black.get_knight();
+    }
+    if(c == 2 || c == 5){
+      Board[0][c] = white.get_bishop();
+      Board[7][c] = black.get_bishop();
+    }
+    if(c == 3){
+      Board[0][c] = white.get_queen();
+      Board[7][c] = black.get_queen();
+    }
+    if(c == 4){
+      Board[0][c] = white.get_king();
+      Board[7][c] = black.get_king();
+    }
+  }
+  for(int c = 0; c<Cols; c++){
+    for(int r = 2; r<6; r++){
+      Board[r][c] = Empty;
     }
   }
 }
-GameBoard::~GameBoard(){
+ChessBoard::~ChessBoard(){
   cout<<"Destructor entered"<<endl;
   Rows = 0;
   Cols = 0;
@@ -21,16 +51,22 @@ GameBoard::~GameBoard(){
     }
   }
 }
-int GameBoard::get_rows(){
+int ChessBoard::get_rows(){
   return Rows;
 }
-int GameBoard::get_cols(){
+int ChessBoard::get_cols(){
   return Cols;
 }
-char GameBoard::get_empty(){
+Pieces ChessBoard::get_white(){
+  return white;
+}
+Pieces ChessBoard::get_black(){
+  return black;
+}
+string ChessBoard::get_empty(){
   return Empty;
 }
-char GameBoard::get_board(int row, int col){
+string ChessBoard::get_board(int row, int col){
   if(row<0 || row>Rows){
     return Empty;
   }
@@ -39,7 +75,7 @@ char GameBoard::get_board(int row, int col){
   }
   return Board[row][col];
 }
-void GameBoard::set_board(int row, int col, char value){
+void ChessBoard::set_board(int row, int col, string value){
   if(row<0 || row>Rows){
     return;
   }
@@ -48,7 +84,7 @@ void GameBoard::set_board(int row, int col, char value){
   }
   Board[row][col] = value;
 }
-void GameBoard::initialize_board(int row, int col, char empty){
+void ChessBoard::initialize_board(int row, int col, string empty){
   Rows = row;
   Cols = col;
   Empty = empty;
@@ -57,8 +93,15 @@ void GameBoard::initialize_board(int row, int col, char empty){
       Board[i][j] = Empty;
     }
   }
+  for(int c = 0; c<Cols; c++){
+    Board[1][c] = 'p';
+  }
+  for(int c = 0; c<Cols; c++){
+    Board[Rows-2][c] = 'p';
+  }
+
 }
-void GameBoard::print_board(){
+void ChessBoard::print_board(){
   // Display border
   system("clear");
   for (int c=0; c<Cols; c++)
@@ -85,7 +128,7 @@ void GameBoard::print_board(){
      cout <<setw(9)<< r;
   cout << "\n";
 }
-void GameBoard::read_board(string filename)
+void ChessBoard::read_board(string filename)
 {
     ifstream din;
     int counter = 0;
@@ -109,7 +152,7 @@ void GameBoard::read_board(string filename)
       }
   }
 }
-void GameBoard::write_board(string filename)
+void ChessBoard::write_board(string filename)
 {
   ofstream dout;
   dout.open(filename);
@@ -125,4 +168,43 @@ void GameBoard::write_board(string filename)
     }
   }
   dout.close();
+}
+bool ChessBoard::legal_king_move(int r_current, int c_current, int r_move, int c_move){
+
+}
+bool ChessBoard::legal_queen_move(int r_current, int c_current, int r_move, int c_move){
+
+}
+bool ChessBoard::legal_rook_move(int r_current, int c_current, int r_move, int c_move){
+
+}
+bool ChessBoard::legal_bishop_move(int r_current, int c_current, int r_move, int c_move){
+
+}
+bool ChessBoard::legal_knight_move(int r_current, int c_current, int r_move, int c_move){
+
+}
+bool ChessBoard::legal_pawn_move(int r_current, int c_current, int r_move, int c_move, Pieces team){
+  if(team.get_pawn() == "WP"){
+    if((r_move == (r_current+1)) && (c_move == c_current)){
+      return true;
+    }
+    else if(((r_move == (r_current+1)) && ((c_move == (c_current-1)) || (c_move == (c_current+1))) && Board[r_move][c_move] != Empty)){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  if(team.get_pawn() == "BP"){
+    if((r_move == (r_current-1)) && (c_move == c_current)){
+      return true;
+    }
+    else if(((r_move == (r_current-1)) && ((c_move == (c_current-1)) || (c_move == (c_current+1))) && Board[r_move][c_move] != Empty)){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 }
