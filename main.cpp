@@ -37,12 +37,16 @@ int main()
       }
     }
     if(chessboard.get_board(r_current, c_current) == chessboard.get_white().get_bishop()){
-      chessboard.set_board(r_move, c_move, chessboard.get_white().get_bishop());
-      chessboard.set_board(r_current, c_current, chessboard.get_empty());
+      if(chessboard.legal_bishop_move(r_current,c_current,r_move,c_move)){
+        chessboard.set_board(r_move, c_move, chessboard.get_white().get_bishop());
+        chessboard.set_board(r_current, c_current, chessboard.get_empty());
+      }
     }
     if((chessboard.get_board(r_current, c_current) == chessboard.get_black().get_bishop())){
-      chessboard.set_board(r_move, c_move, chessboard.get_black().get_bishop());
-      chessboard.set_board(r_current, c_current, chessboard.get_empty());
+      if(chessboard.legal_bishop_move(r_current,c_current,r_move,c_move)){
+        chessboard.set_board(r_move, c_move, chessboard.get_black().get_bishop());
+        chessboard.set_board(r_current, c_current, chessboard.get_empty());
+      }
     }else{
       cout<<"Not a legal bishop move please try again"<<endl;
     }
