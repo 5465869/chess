@@ -57,6 +57,7 @@ void Team::insert_piece(string name, string team_name, int row, int col){
   temp->set_name(name);
   temp->set_team(team_name);
   temp->set_Next(Head);
+  temp->set_moved(0); // sets moved to 0
   temp->Location.set_row_col(row, col);
   Head = temp;
 }

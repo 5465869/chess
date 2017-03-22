@@ -11,7 +11,7 @@ ChessBoard::ChessBoard(){
   Piece* Temp = white.get_Head();
   int c = 0;
   while(c<Cols && Temp != NULL){
-    Board[0][c] = *Temp;
+    Board[0][c] = *Temp; // sets it as the piece
     Temp = Temp->get_Next();
     c++;
   }
@@ -79,7 +79,19 @@ void ChessBoard::set_board(int row, int col, Piece piece){
   if(col<0 || col > Cols){
     return;
   }
-  Board[row][col] = piece;
+  Board[row][col] = piece;//copy
+}
+void ChessBoard::set_piece(int row, int col, int moved){
+
+  if(row<0 || row>Rows){
+    return;
+  }
+  if(col<0 || col > Cols){
+    return;
+  }
+
+  (Board[row][col]).set_moved(moved);
+
 }
 
 /*
