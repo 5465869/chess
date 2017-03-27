@@ -19,6 +19,20 @@ void Game::controller(){
     if(board.get_board(r_current, c_current).get_name() == "Pawn"){
       if(legal_pawn_move(r_current,c_current,r_move,c_move))
       {
+        Piece * Temp = board.black.get_Head();
+        while(Temp != NULL){
+          if(Temp->Location.is_equal(r_current, c_current)){
+            Temp->Location.set_row_col(r_move, c_move);
+          }
+          Temp = Temp->get_Next();
+        }
+        Temp = board.white.get_Head();
+        while(Temp != NULL){
+          if(Temp->Location.is_equal(r_current, c_current)){
+            Temp->Location.set_row_col(r_move, c_move);
+          }
+          Temp = Temp->get_Next();
+        }
         board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
         board.set_board(r_move, c_move, board.get_board(r_current, c_current));
         board.set_board(r_current, c_current, board.get_empty());
@@ -32,6 +46,20 @@ void Game::controller(){
     if(board.get_board(r_current, c_current).get_name() == "Bishop"){
       if(legal_bishop_move(r_current,c_current,r_move,c_move))
       {
+        Piece * Temp = board.black.get_Head();
+        while(Temp != NULL){
+          if(Temp->Location.is_equal(r_current, c_current)){
+            Temp->Location.set_row_col(r_move, c_move);
+          }
+          Temp = Temp->get_Next();
+        }
+        Temp = board.white.get_Head();
+        while(Temp != NULL){
+          if(Temp->Location.is_equal(r_current, c_current)){
+            Temp->Location.set_row_col(r_move, c_move);
+          }
+          Temp = Temp->get_Next();
+        }
         board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
         board.set_board(r_move, c_move, board.get_board(r_current, c_current));
         board.set_board(r_current, c_current, board.get_empty());
@@ -45,6 +73,20 @@ void Game::controller(){
     if(board.get_board(r_current, c_current).get_name() == "Rook"){
       if(legal_rook_move(r_current,c_current,r_move,c_move))
       {
+        Piece * Temp = board.black.get_Head();
+        while(Temp != NULL){
+          if(Temp->Location.is_equal(r_current, c_current)){
+            Temp->Location.set_row_col(r_move, c_move);
+          }
+          Temp = Temp->get_Next();
+        }
+        Temp = board.white.get_Head();
+        while(Temp != NULL){
+          if(Temp->Location.is_equal(r_current, c_current)){
+            Temp->Location.set_row_col(r_move, c_move);
+          }
+          Temp = Temp->get_Next();
+        }
         board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
         board.set_board(r_move, c_move, board.get_board(r_current, c_current));
         board.set_board(r_current, c_current, board.get_empty());
@@ -58,6 +100,20 @@ void Game::controller(){
     if(board.get_board(r_current, c_current).get_name() == "Queen"){
       if(legal_queen_move(r_current,c_current,r_move,c_move))
       {
+        Piece * Temp = board.black.get_Head();
+        while(Temp != NULL){
+          if(Temp->Location.is_equal(r_current, c_current)){
+            Temp->Location.set_row_col(r_move, c_move);
+          }
+          Temp = Temp->get_Next();
+        }
+        Temp = board.white.get_Head();
+        while(Temp != NULL){
+          if(Temp->Location.is_equal(r_current, c_current)){
+            Temp->Location.set_row_col(r_move, c_move);
+          }
+          Temp = Temp->get_Next();
+        }
         board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
         board.set_board(r_move, c_move, board.get_board(r_current, c_current));
         board.set_board(r_current, c_current, board.get_empty());
@@ -71,6 +127,20 @@ void Game::controller(){
     if(board.get_board(r_current, c_current).get_name() == "King"){
       if(legal_king_move(r_current,c_current,r_move,c_move))
       {
+        Piece * Temp = board.black.get_Head();
+        while(Temp != NULL){
+          if(Temp->Location.is_equal(r_current, c_current)){
+            Temp->Location.set_row_col(r_move, c_move);
+          }
+          Temp = Temp->get_Next();
+        }
+        Temp = board.white.get_Head();
+        while(Temp != NULL){
+          if(Temp->Location.is_equal(r_current, c_current)){
+            Temp->Location.set_row_col(r_move, c_move);
+          }
+          Temp = Temp->get_Next();
+        }
         board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
         board.set_board(r_move, c_move, board.get_board(r_current, c_current));
         board.set_board(r_current, c_current, board.get_empty());
@@ -84,6 +154,20 @@ void Game::controller(){
     if(board.get_board(r_current, c_current).get_name() == "Knight"){
       if(legal_knight_move(r_current,c_current,r_move,c_move))
       {
+        Piece * Temp = board.black.get_Head();
+        while(Temp != NULL){
+          if(Temp->Location.is_equal(r_current, c_current)){
+            Temp->Location.set_row_col(r_move, c_move);
+          }
+          Temp = Temp->get_Next();
+        }
+        Temp = board.white.get_Head();
+        while(Temp != NULL){
+          if(Temp->Location.is_equal(r_current, c_current)){
+            Temp->Location.set_row_col(r_move, c_move);
+          }
+          Temp = Temp->get_Next();
+        }
         board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
         board.set_board(r_move, c_move, board.get_board(r_current, c_current));
         board.set_board(r_current, c_current, board.get_empty());
@@ -93,23 +177,6 @@ void Game::controller(){
         cout<<"Not a legal Knight move please try again"<<endl;
       }
     }
-
-/*
-    if(board.get_board(r_current, c_current) == board.get_white().get_bishop()){
-      if(board.legal_bishop_move(r_current,c_current,r_move,c_move)){
-        board.set_board(r_move, c_move, board.get_white().get_bishop());
-        board.set_board(r_current, c_current, board.get_empty());
-      }
-    }
-    if((board.get_board(r_current, c_current) == board.get_black().get_bishop())){
-      if(board.legal_bishop_move(r_current,c_current,r_move,c_move)){
-        board.set_board(r_move, c_move, board.get_black().get_bishop());
-        board.set_board(r_current, c_current, board.get_empty());
-      }
-    }else{
-      cout<<"Not a legal bishop move please try again"<<endl;
-    }
-    */
     board.print_board();
     cout<<"Would you like to continue?"<<endl;
     cin>>userchoice;
@@ -139,56 +206,101 @@ bool Game::legal_queen_move(int r_current, int c_current, int r_move, int c_move
   }
 }
 //works
-bool Game::legal_rook_move(int r_current, int c_current, int r_move, int c_move){
-  //temp variables
-  int x = c_move;
-  int y = r_move;
-  //on horizontal or vertical line
-  if((((double)(c_current-c_move)*(r_current-r_move)) == 0) || (((double)(c_current-c_move)*(r_current - r_move)) == 0)){
-
+bool Game::legal_rook_move(int r_current, int c_current, int r_move, int c_move)
+{
+  Piece * node_black = new Piece();
+  Piece * node_white = new Piece();
+  node_black = board.black.get_Head();
+  node_white = board.white.get_Head();
+  if(((c_current-c_move)*(r_current-r_move)) == 0)
+  {
     //make sure square is empty or other piece
     if (board.get_board(r_move, c_move).get_name() == board.get_empty().get_name()
-    || board.get_board(r_move, c_move).get_team() != board.get_board(r_current, c_current).get_team()) {
-      //make sure there isn't a piece on its path
-      if (c_move < c_current) {
-        x++;
-        while(y != r_current && x != c_current) {
-          if (board.get_board(y, x).get_name() != board.get_empty().get_name()) {
-            return false;
+    || board.get_board(r_move, c_move).get_team() != board.get_board(r_current, c_current).get_team())
+    {
+      cout<<"beginning of while loops"<<endl;
+      while(node_black != NULL)
+      {
+        node_black->print_piece_name();
+        cout<<" ";
+        node_black->Location.print();
+        if(r_move == r_current && node_black->Location.get_row() == r_current)
+        {
+          cout<<"1"<<endl;
+          if(c_move>c_current)
+          {
+            if(node_black->Location.get_column() > c_move && node_black->Location.get_column() < c_current){
+              return false;
+            }
           }
-          x++;
-        }
-      } else if (c_move > c_current) {
-        x--;
-        while(y != r_current && x != c_current) {
-          if (board.get_board(y, x).get_name() != board.get_empty().get_name()) {
-            return false;
+          if(c_move<c_current)
+          {
+            if(node_black->Location.get_column() < c_move && node_black->Location.get_column() > c_current){
+              return false;
+            }
           }
-          x--;
         }
-      } else if (r_move < r_current) {
-        y++;
-        while(y != r_current && x != c_current) {
-          if (board.get_board(y, x).get_name() != board.get_empty().get_name()) {
-            return false;
+        if(c_move == c_current && node_black->Location.get_column() == c_move)
+        {
+          cout<<"2"<<endl;
+          if(r_move > r_current){
+            cout<<"3"<<endl;
+            if(node_black->Location.get_row() < r_move && node_black->Location.get_row() > r_current){
+              cout<<"5"<<endl;
+              return false;
+            }
           }
-          y++;
-        }
-      } else if (r_move > r_current) {
-        y--;
-        while(y != r_current && x != c_current) {
-          if (board.get_board(y, x).get_name() != board.get_empty().get_name()) {
-            return false;
+          if(r_move < r_current){
+            cout<<"4"<<endl;
+            if(node_black->Location.get_row() > r_move && node_black->Location.get_row() < r_current){
+              cout<<"6"<<endl;
+              return false;
+            }
           }
-          y--;
         }
+        node_black = node_black->get_Next();
+      }
+      while(node_white != NULL)
+      {
+        node_white->print_piece_name();
+        node_white->Location.print();
+        if(r_move == r_current && node_white->Location.get_row() == r_current)
+        {
+          if(c_move>c_current)
+          {
+            if(node_white->Location.get_column() > c_move && node_white->Location.get_column() < c_current){
+              return false;
+            }
+          }
+          if(c_move<c_current)
+          {
+            if(node_white->Location.get_column() < c_move && node_white->Location.get_column() > c_current){
+              return false;
+            }
+          }
+        }
+        if(c_move == c_current && node_white->Location.get_column() == c_current)
+        {
+          cout<<"equal column"<<endl;
+          if(r_move>r_current){
+            if(node_white->Location.get_row() < c_move && node_white->Location.get_row() > c_current){
+              return false;
+            }
+          }
+          if(r_move<r_current){
+            if(node_white->Location.get_row() > c_move && node_white->Location.get_row() < c_current){
+              return false;
+            }
+          }
+        }
+        node_white = node_white->get_Next();
       }
       return true;
+    }else{
     }
-    return false;
-  }else{
-    return false;
   }
+  cout<<"end"<<endl;
+  return false;
 }
 //works
 bool Game::legal_bishop_move(int r_current, int c_current, int r_move, int c_move){

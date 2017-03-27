@@ -23,9 +23,9 @@ public:
   void print_board();
   void read_board(string filename);
   void write_board(string filename);
-private:
   Team black;
   Team white;
+private:
   int Rows;
   int Cols;
   Piece Board[MAX_ROWS][MAX_COLS];

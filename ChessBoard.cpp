@@ -3,11 +3,11 @@
 ChessBoard::ChessBoard(){
   Rows = 8;
   Cols = 8;
-  Team Black("black");
-  Team White("white");
   Empty.set_name(".");
-  black = Black;
-  white = White;
+  black.set_team_name("black");
+  white.set_team_name("white");
+  black.initialize_team();
+  white.initialize_team();
   Piece* Temp = white.get_Head();
   int c = 0;
   while(c<Cols && Temp != NULL){

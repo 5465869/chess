@@ -9,9 +9,10 @@ using namespace std;
 class Team{
 public:
   Team();
-  Team(string team);
   ~Team();
-  void delete_piece(Piece);
+  void delete_piece(int row, int col);
+  void set_team_name(string name);
+  void initialize_team();
   int get_count();
   void set_count(int count);
   Piece find_piece(string name, string team);
