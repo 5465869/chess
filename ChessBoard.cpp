@@ -3,36 +3,42 @@
 ChessBoard::ChessBoard(){
   Rows = 8;
   Cols = 8;
-  Empty = '+';
-  black.set_all_pieces("BK","BQ","BR","BB","Bk","BP");
-  white.set_all_pieces("WK","WQ","WR","WB","Wk","WP");
-  for(int c = 0; c<Cols; c++){
-    Board[1][c] = white.get_pawn();
+  Team Black("black");
+  Team White("white");
+  Empty.set_name(".");
+  black = Black;
+  white = White;
+  Piece* Temp = white.get_Head();
+  int c = 0;
+  while(c<Cols && Temp != NULL){
+    Board[0][c] = *Temp; // sets it as the piece
+    Temp = Temp->get_Next();
+    c++;
   }
-  for(int c = 0; c<Cols; c++){
-    Board[6][c] = black.get_pawn();
+  c = 0;
+  Temp = white.get_Head();
+  while(c<16 && Temp!= NULL){
+    if(c>7){
+      Board[1][c-8] = *Temp;
+    }
+    Temp = Temp->get_Next();
+    c++;
   }
-  for(int c = 0; c<Cols; c++){
-    if(c == 0 || c == 7){
-      Board[0][c] = white.get_rook();
-      Board[7][c] = black.get_rook();
+  c = 0;
+  Temp = black.get_Head();
+  while(c<Cols && Temp!= NULL){
+    Board[7][c] = *Temp;
+    Temp = Temp->get_Next();
+    c++;
+  }
+  c = 0;
+  Temp = black.get_Head();
+  while(c<16 && Temp!= NULL){
+    if(c>7){
+      Board[6][c-8] = *Temp;
     }
-    if(c == 1 || c == 6){
-      Board[0][c] = white.get_knight();
-      Board[7][c] = black.get_knight();
-    }
-    if(c == 2 || c == 5){
-      Board[0][c] = white.get_bishop();
-      Board[7][c] = black.get_bishop();
-    }
-    if(c == 3){
-      Board[0][c] = white.get_queen();
-      Board[7][c] = black.get_queen();
-    }
-    if(c == 4){
-      Board[0][c] = white.get_king();
-      Board[7][c] = black.get_king();
-    }
+    Temp = Temp->get_Next();
+    c++;
   }
   for(int c = 0; c<Cols; c++){
     for(int r = 2; r<6; r++){
@@ -49,33 +55,46 @@ int ChessBoard::get_rows(){
 int ChessBoard::get_cols(){
   return Cols;
 }
-Pieces ChessBoard::get_white(){
-  return white;
-}
-Pieces ChessBoard::get_black(){
-  return black;
-}
-string ChessBoard::get_empty(){
+Piece ChessBoard::get_empty(){
   return Empty;
 }
-string ChessBoard::get_board(int row, int col){
+
+Piece ChessBoard::get_board(int row, int col){
   if(row<0 || row>Rows){
+    cout<<"error invalid location"<<endl;
     return Empty;
   }
   if(col<0 || col > Cols){
+    cout<<"Error invalid location"<<endl;
     return Empty;
   }
-  return Board[row][col];
+  else{
+    return Board[row][col];
+  }
 }
-void ChessBoard::set_board(int row, int col, string value){
+void ChessBoard::set_board(int row, int col, Piece piece){
   if(row<0 || row>Rows){
     return;
   }
   if(col<0 || col > Cols){
     return;
   }
-  Board[row][col] = value;
+  Board[row][col] = piece;//copy
 }
+void ChessBoard::set_piece(int row, int col, int moved){
+
+  if(row<0 || row>Rows){
+    return;
+  }
+  if(col<0 || col > Cols){
+    return;
+  }
+
+  (Board[row][col]).set_moved(moved);
+
+}
+
+/*
 void ChessBoard::initialize_board(int row, int col, string empty){
   Rows = row;
   Cols = col;
@@ -93,13 +112,13 @@ void ChessBoard::initialize_board(int row, int col, string empty){
   }
 
 }
+*/
 void ChessBoard::print_board(){
   // Display border
   system("clear");
   for (int c=0; c<Cols; c++)
      cout <<setw(9)<< c;
   cout << "\n";
-  int count = 0;
   char border_left = 'A';
   // Display data
   //cout<<Rows<<" "<<Cols<<endl;
@@ -108,7 +127,8 @@ void ChessBoard::print_board(){
      border_left = 'A'+r;
      cout << border_left;
      for (int c=0; c<Cols; c++){
-         cout<<setw(9)<< Board[r][c];
+         cout<<setw(9);
+         Board[r][c].print_piece_name();
      }
      cout << "\n";
      cout << "\n";
@@ -120,6 +140,7 @@ void ChessBoard::print_board(){
      cout <<setw(9)<< r;
   cout << "\n";
 }
+/*
 void ChessBoard::read_board(string filename)
 {
     ifstream din;
@@ -144,63 +165,4 @@ void ChessBoard::read_board(string filename)
       }
   }
 }
-void ChessBoard::write_board(string filename)
-{
-  ofstream dout;
-  dout.open(filename);
-  dout<<Rows<<" "<<Cols<<" "<<Empty<<endl;
-  for(int r = 0; r < Rows; r++){
-    for(int c = 0; c < Cols; c++){
-      if(c == Cols-1){
-        dout<<setw(2)<< Board[r][c];
-        dout<<endl; // ensures the formatting is correct with a new line after the end of a column
-      }else{
-        dout<<setw(2)<< Board[r][c];
-      }
-    }
-  }
-  dout.close();
-}
-bool ChessBoard::legal_king_move(int r_current, int c_current, int r_move, int c_move){
-
-}
-bool ChessBoard::legal_queen_move(int r_current, int c_current, int r_move, int c_move){
-
-}
-bool ChessBoard::legal_rook_move(int r_current, int c_current, int r_move, int c_move){
-
-}
-bool ChessBoard::legal_bishop_move(int r_current, int c_current, int r_move, int c_move){
-  if(((c_current-c_move+2)/(r_current-r_move+2) == 1 || (c_current-c_move+2)/(r_current - r_move) == -1)){
-    return true;
-  }else{
-    return false;
-  }
-}
-bool ChessBoard::legal_knight_move(int r_current, int c_current, int r_move, int c_move){
-
-}
-bool ChessBoard::legal_pawn_move(int r_current, int c_current, int r_move, int c_move, Pieces team){
-  if(team.get_pawn() == "WP"){
-    if((r_move == (r_current+1)) && (c_move == c_current)){
-      return true;
-    }
-    else if(((r_move == (r_current+1)) && ((c_move == (c_current-1)) || (c_move == (c_current+1))) && Board[r_move][c_move] != Empty)){
-      return true;
-    }
-    else{
-      return false;
-    }
-  }
-  if(team.get_pawn() == "BP"){
-    if((r_move == (r_current-1)) && (c_move == c_current)){
-      return true;
-    }
-    else if(((r_move == (r_current-1)) && ((c_move == (c_current-1)) || (c_move == (c_current+1))) && Board[r_move][c_move] != Empty)){
-      return true;
-    }
-    else{
-      return false;
-    }
-  }
-}
+*/
