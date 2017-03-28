@@ -7,8 +7,8 @@ Coordinate::Coordinate(){
 Coordinate::~Coordinate(){
 
 }
-bool Coordinate::is_equal(Coordinate one, Coordinate two){
-  if((one.row == two.row) && (one.col == two.col))
+bool Coordinate::is_equal(int r,int c){
+  if((row == r) && (col == c))
     return true;
   else return false;
 }
