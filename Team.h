@@ -15,7 +15,7 @@ public:
   void initialize_team();
   int get_count();
   void set_count(int count);
-  Piece find_piece(string name, string team);
+  Piece find_piece(string name);
   void insert_piece(string name, string team_name, int row, int col);
   void print_team();
   string get_team_name();

@@ -4,6 +4,7 @@ ChessBoard::ChessBoard(){
   Rows = 8;
   Cols = 8;
   Empty.set_name(".");
+  Empty.set_team("NULL");
   black.set_team_name("black");
   white.set_team_name("white");
   black.initialize_team();
@@ -119,12 +120,12 @@ void ChessBoard::print_board(){
   for (int c=0; c<Cols; c++)
      cout <<setw(9)<< c;
   cout << "\n";
-  char border_left = 'A';
+  int border_left = 0;
   // Display data
   //cout<<Rows<<" "<<Cols<<endl;
   for (int r=0; r<Rows; r++)
   {
-     border_left = 'A'+r;
+     border_left = r;
      cout << border_left;
      for (int c=0; c<Cols; c++){
          cout<<setw(9);
@@ -139,6 +140,8 @@ void ChessBoard::print_board(){
   for (int r=0; r<Cols; r++)
      cout <<setw(9)<< r;
   cout << "\n";
+  //black.print_team();
+  //white.print_team();
 }
 /*
 void ChessBoard::read_board(string filename)

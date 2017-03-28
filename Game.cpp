@@ -4,12 +4,18 @@
 
 void Game::controller(){
   string userchoice;
+  int counter = 1;
   int r_current, c_current, r_move, c_move;
   cout<<"Would you like to start?"<<endl;
   cin>>userchoice;
   while(userchoice == "yes"){
     board.print_board();
-    cout<<"Please enter the location of the piece to be moved then the place you would like to move it"<<endl;;
+    if(counter % 2 == 0){
+      cout<<"Black's move please enter the coordinates for the piece you would like to move then the place you would like to move it."<<endl;
+    }else{
+      cout<<"White's move please enter the coordinates for the piece you would like to move then the place you would like to move it."<<endl;
+    }
+
     cin>>r_current>>c_current>>r_move>>c_move;
     if (cin.fail()) {
       userchoice = "no";
@@ -17,35 +23,59 @@ void Game::controller(){
     }
     //Pawn
     if(board.get_board(r_current, c_current).get_name() == "Pawn"){
-      if(legal_pawn_move(r_current,c_current,r_move,c_move))
-      {
-        Piece * Temp = board.black.get_Head();
-        while(Temp != NULL){
-          if(Temp->Location.is_equal(r_current, c_current)){
-            Temp->Location.set_row_col(r_move, c_move);
+      cout<<board.get_board(r_current,c_current).get_team()<<endl;
+      if((counter % 2 == 0 && board.get_board(r_current,c_current).get_team() == "white") || (counter % 2 != 0 && board.get_board(r_current,c_current).get_team() == "black")){
+        cout<<"You are trying to move the wrong team please try again."<<endl;
+        counter--;
+      }else{
+
+        if(legal_pawn_move(r_current,c_current,r_move,c_move))
+        {
+          if(counter % 2 == 0 && board.get_board(r_move, c_move).get_team() == "white"){
+            board.white.delete_piece(r_move, c_move);
           }
-          Temp = Temp->get_Next();
-        }
-        Temp = board.white.get_Head();
-        while(Temp != NULL){
-          if(Temp->Location.is_equal(r_current, c_current)){
-            Temp->Location.set_row_col(r_move, c_move);
+          if(counter % 2 != 0 && board.get_board(r_move, c_move).get_team() == "black"){
+            board.black.delete_piece(r_move,c_move);
           }
-          Temp = Temp->get_Next();
+          Piece * Temp = board.black.get_Head();
+          while(Temp != NULL){
+            if(Temp->Location.is_equal(r_current, c_current)){
+              Temp->Location.set_row_col(r_move, c_move);
+            }
+            Temp = Temp->get_Next();
+          }
+          Temp = board.white.get_Head();
+          while(Temp != NULL){
+            if(Temp->Location.is_equal(r_current, c_current)){
+              Temp->Location.set_row_col(r_move, c_move);
+            }
+            Temp = Temp->get_Next();
+          }
+          board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
+          board.set_board(r_move, c_move, board.get_board(r_current, c_current));
+          board.set_board(r_current, c_current, board.get_empty());
+          cout<<""<<endl;
+        }else
+        {
+          cout<<"Not a legal Pawn move please try again"<<endl;
+          counter--;
         }
-        board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
-        board.set_board(r_move, c_move, board.get_board(r_current, c_current));
-        board.set_board(r_current, c_current, board.get_empty());
-        cout<<"successful move"<<endl;
-      }else
-      {
-        cout<<"Not a legal Pawn move please try again"<<endl;
       }
     }
     //Bishop
     if(board.get_board(r_current, c_current).get_name() == "Bishop"){
+      if((counter % 2 == 0 && board.get_board(r_current,c_current).get_team() == "white") || (counter % 2 != 0 && board.get_board(r_current,c_current).get_team() == "black")){
+        cout<<"You are trying to move the wrong team please try again."<<endl;
+        counter--;
+      }
       if(legal_bishop_move(r_current,c_current,r_move,c_move))
       {
+        if(counter % 2 == 0 && board.get_board(r_move, c_move).get_team() == "white"){
+          board.white.delete_piece(r_move, c_move);
+        }
+        if(counter % 2 != 0 && board.get_board(r_move, c_move).get_team() == "black"){
+          board.black.delete_piece(r_move,c_move);
+        }
         Piece * Temp = board.black.get_Head();
         while(Temp != NULL){
           if(Temp->Location.is_equal(r_current, c_current)){
@@ -67,119 +97,175 @@ void Game::controller(){
       }else
       {
         cout<<"Not a legal Bishop move please try again"<<endl;
+        counter--;
       }
     }
     //Rook
     if(board.get_board(r_current, c_current).get_name() == "Rook"){
-      if(legal_rook_move(r_current,c_current,r_move,c_move))
-      {
-        Piece * Temp = board.black.get_Head();
-        while(Temp != NULL){
-          if(Temp->Location.is_equal(r_current, c_current)){
-            Temp->Location.set_row_col(r_move, c_move);
+      if((counter % 2 == 0 && board.get_board(r_current,c_current).get_team() == "white") || (counter % 2 != 0 && board.get_board(r_current,c_current).get_team() == "black")){
+        cout<<"You are trying to move the wrong team please try again."<<endl;
+        counter--;
+      }else{
+        if(legal_rook_move(r_current,c_current,r_move,c_move))
+        {
+          if(counter % 2 == 0 && board.get_board(r_move, c_move).get_team() == "white"){
+            board.white.delete_piece(r_move, c_move);
           }
-          Temp = Temp->get_Next();
-        }
-        Temp = board.white.get_Head();
-        while(Temp != NULL){
-          if(Temp->Location.is_equal(r_current, c_current)){
-            Temp->Location.set_row_col(r_move, c_move);
+          if(counter % 2 != 0 && board.get_board(r_move, c_move).get_team() == "black"){
+            board.black.delete_piece(r_move,c_move);
           }
-          Temp = Temp->get_Next();
+          Piece * Temp = board.black.get_Head();
+          while(Temp != NULL){
+            if(Temp->Location.is_equal(r_current, c_current)){
+              Temp->Location.set_row_col(r_move, c_move);
+            }
+            Temp = Temp->get_Next();
+          }
+          Temp = board.white.get_Head();
+          while(Temp != NULL){
+            if(Temp->Location.is_equal(r_current, c_current)){
+              Temp->Location.set_row_col(r_move, c_move);
+            }
+            Temp = Temp->get_Next();
+          }
+          board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
+          board.set_board(r_move, c_move, board.get_board(r_current, c_current));
+          board.set_board(r_current, c_current, board.get_empty());
+          cout<<"successful move"<<endl;
+        }else
+        {
+          cout<<"Not a legal Rook move please try again"<<endl;
+          counter--;
         }
-        board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
-        board.set_board(r_move, c_move, board.get_board(r_current, c_current));
-        board.set_board(r_current, c_current, board.get_empty());
-        cout<<"successful move"<<endl;
-      }else
-      {
-        cout<<"Not a legal Rook move please try again"<<endl;
       }
     }
     //Queen
     if(board.get_board(r_current, c_current).get_name() == "Queen"){
-      if(legal_queen_move(r_current,c_current,r_move,c_move))
-      {
-        Piece * Temp = board.black.get_Head();
-        while(Temp != NULL){
-          if(Temp->Location.is_equal(r_current, c_current)){
-            Temp->Location.set_row_col(r_move, c_move);
+      if((counter % 2 == 0 && board.get_board(r_current,c_current).get_team() == "white") || (counter % 2 != 0 && board.get_board(r_current,c_current).get_team() == "black")){
+        cout<<"You are trying to move the wrong team please try again."<<endl;
+        counter--;
+      }else{
+        if(legal_queen_move(r_current,c_current,r_move,c_move))
+        {
+          if(counter % 2 == 0 && board.get_board(r_move, c_move).get_team() == "white"){
+            board.white.delete_piece(r_move, c_move);
           }
-          Temp = Temp->get_Next();
-        }
-        Temp = board.white.get_Head();
-        while(Temp != NULL){
-          if(Temp->Location.is_equal(r_current, c_current)){
-            Temp->Location.set_row_col(r_move, c_move);
+          if(counter % 2 != 0 && board.get_board(r_move, c_move).get_team() == "black"){
+            board.black.delete_piece(r_move,c_move);
           }
-          Temp = Temp->get_Next();
+          Piece * Temp = board.black.get_Head();
+          while(Temp != NULL){
+            if(Temp->Location.is_equal(r_current, c_current)){
+              Temp->Location.set_row_col(r_move, c_move);
+            }
+            Temp = Temp->get_Next();
+          }
+          Temp = board.white.get_Head();
+          while(Temp != NULL){
+            if(Temp->Location.is_equal(r_current, c_current)){
+              Temp->Location.set_row_col(r_move, c_move);
+            }
+            Temp = Temp->get_Next();
+          }
+          board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
+          board.set_board(r_move, c_move, board.get_board(r_current, c_current));
+          board.set_board(r_current, c_current, board.get_empty());
+          cout<<"successful move"<<endl;
+        }else
+        {
+          cout<<"Not a legal Queen move please try again"<<endl;
+          counter--;
         }
-        board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
-        board.set_board(r_move, c_move, board.get_board(r_current, c_current));
-        board.set_board(r_current, c_current, board.get_empty());
-        cout<<"successful move"<<endl;
-      }else
-      {
-        cout<<"Not a legal Queen move please try again"<<endl;
       }
     }
     //King
     if(board.get_board(r_current, c_current).get_name() == "King"){
-      if(legal_king_move(r_current,c_current,r_move,c_move))
-      {
-        Piece * Temp = board.black.get_Head();
-        while(Temp != NULL){
-          if(Temp->Location.is_equal(r_current, c_current)){
-            Temp->Location.set_row_col(r_move, c_move);
+      if((counter % 2 == 0 && board.get_board(r_current,c_current).get_team() == "white") || (counter % 2 != 0 && board.get_board(r_current,c_current).get_team() == "black")){
+        cout<<"You are trying to move the wrong team please try again."<<endl;
+        counter--;
+      }else{
+        if(legal_king_move(r_current,c_current,r_move,c_move))
+        {
+          if(counter % 2 == 0 && board.get_board(r_move, c_move).get_team() == "white"){
+            board.white.delete_piece(r_move, c_move);
           }
-          Temp = Temp->get_Next();
-        }
-        Temp = board.white.get_Head();
-        while(Temp != NULL){
-          if(Temp->Location.is_equal(r_current, c_current)){
-            Temp->Location.set_row_col(r_move, c_move);
+          if(counter % 2 != 0 && board.get_board(r_move, c_move).get_team() == "black"){
+            board.black.delete_piece(r_move,c_move);
           }
-          Temp = Temp->get_Next();
+          Piece * Temp = board.black.get_Head();
+          while(Temp != NULL){
+            if(Temp->Location.is_equal(r_current, c_current)){
+              Temp->Location.set_row_col(r_move, c_move);
+            }
+            Temp = Temp->get_Next();
+          }
+          Temp = board.white.get_Head();
+          while(Temp != NULL){
+            if(Temp->Location.is_equal(r_current, c_current)){
+              Temp->Location.set_row_col(r_move, c_move);
+            }
+            Temp = Temp->get_Next();
+          }
+          board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
+          board.set_board(r_move, c_move, board.get_board(r_current, c_current));
+          board.set_board(r_current, c_current, board.get_empty());
+          cout<<"successful move"<<endl;
+        }else
+        {
+          cout<<"Not a legal King move please try again"<<endl;
+          counter--;
         }
-        board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
-        board.set_board(r_move, c_move, board.get_board(r_current, c_current));
-        board.set_board(r_current, c_current, board.get_empty());
-        cout<<"successful move"<<endl;
-      }else
-      {
-        cout<<"Not a legal King move please try again"<<endl;
       }
     }
     //Knight
-    if(board.get_board(r_current, c_current).get_name() == "Knight"){
-      if(legal_knight_move(r_current,c_current,r_move,c_move))
+    if(board.get_board(r_current, c_current).get_name() == "Knight")
+    {
+      if((counter % 2 == 0 && board.get_board(r_current,c_current).get_team() == "white") || (counter % 2 != 0 && board.get_board(r_current,c_current).get_team() == "black"))
       {
-        Piece * Temp = board.black.get_Head();
-        while(Temp != NULL){
-          if(Temp->Location.is_equal(r_current, c_current)){
-            Temp->Location.set_row_col(r_move, c_move);
-          }
-          Temp = Temp->get_Next();
-        }
-        Temp = board.white.get_Head();
-        while(Temp != NULL){
-          if(Temp->Location.is_equal(r_current, c_current)){
-            Temp->Location.set_row_col(r_move, c_move);
-          }
-          Temp = Temp->get_Next();
-        }
-        board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
-        board.set_board(r_move, c_move, board.get_board(r_current, c_current));
-        board.set_board(r_current, c_current, board.get_empty());
-        cout<<"successful move"<<endl;
+        cout<<"You are trying to move the wrong team please try again."<<endl;
+        counter--;
       }else
       {
-        cout<<"Not a legal Knight move please try again"<<endl;
+        if(legal_knight_move(r_current,c_current,r_move,c_move))
+        {
+          if(counter % 2 == 0 && board.get_board(r_move, c_move).get_team() == "white"){
+            board.white.delete_piece(r_move, c_move);
+          }
+          if(counter % 2 != 0 && board.get_board(r_move, c_move).get_team() == "black"){
+            board.black.delete_piece(r_move,c_move);
+          }
+          Piece * Temp = board.black.get_Head();
+          while(Temp != NULL){
+            if(Temp->Location.is_equal(r_current, c_current)){
+              Temp->Location.set_row_col(r_move, c_move);
+            }
+            Temp = Temp->get_Next();
+          }
+          Temp = board.white.get_Head();
+          while(Temp != NULL){
+            if(Temp->Location.is_equal(r_current, c_current)){
+              Temp->Location.set_row_col(r_move, c_move);
+            }
+            Temp = Temp->get_Next();
+          }
+          board.set_piece(r_current,c_current,1);//sets the piece to moved value 1
+          board.set_board(r_move, c_move, board.get_board(r_current, c_current));
+          board.set_board(r_current, c_current, board.get_empty());
+          cout<<"successful move"<<endl;
+        }else
+          {
+            cout<<"Not a legal Knight move please try again"<<endl;
+            counter--;
+          }
       }
+    }
+    if(is_check()){
+      cout<<"Check! must escape it!"<<endl;
     }
     board.print_board();
     cout<<"Would you like to continue?"<<endl;
     cin>>userchoice;
+    counter++;
   }
 }
 
@@ -193,9 +279,7 @@ bool Game::legal_king_move(int r_current, int c_current, int r_move, int c_move)
       return true;
     }
   }
-
   return false;
-
 }
 //probably works
 bool Game::legal_queen_move(int r_current, int c_current, int r_move, int c_move){
@@ -221,12 +305,8 @@ bool Game::legal_rook_move(int r_current, int c_current, int r_move, int c_move)
       cout<<"beginning of while loops"<<endl;
       while(node_black != NULL)
       {
-        node_black->print_piece_name();
-        cout<<" ";
-        node_black->Location.print();
         if(r_move == r_current && node_black->Location.get_row() == r_current)
         {
-          cout<<"1"<<endl;
           if(c_move>c_current)
           {
             if(node_black->Location.get_column() > c_move && node_black->Location.get_column() < c_current){
@@ -242,18 +322,13 @@ bool Game::legal_rook_move(int r_current, int c_current, int r_move, int c_move)
         }
         if(c_move == c_current && node_black->Location.get_column() == c_move)
         {
-          cout<<"2"<<endl;
           if(r_move > r_current){
-            cout<<"3"<<endl;
             if(node_black->Location.get_row() < r_move && node_black->Location.get_row() > r_current){
-              cout<<"5"<<endl;
               return false;
             }
           }
           if(r_move < r_current){
-            cout<<"4"<<endl;
             if(node_black->Location.get_row() > r_move && node_black->Location.get_row() < r_current){
-              cout<<"6"<<endl;
               return false;
             }
           }
@@ -299,7 +374,6 @@ bool Game::legal_rook_move(int r_current, int c_current, int r_move, int c_move)
     }else{
     }
   }
-  cout<<"end"<<endl;
   return false;
 }
 //works
@@ -425,4 +499,83 @@ bool Game::legal_pawn_move(int r_current, int c_current, int r_move, int c_move)
       return false;
     }
   }
+}
+bool Game::is_check(){
+  Piece * Temp = board.black.get_Head();
+  int king_row = board.white.find_piece("King").Location.get_row();
+  int king_column = board.white.find_piece("King").Location.get_column();
+  while(Temp != NULL){
+    if(Temp->get_name() == "Pawn"){
+      if(legal_pawn_move(Temp->Location.get_row(),Temp->Location.get_column(), king_row, king_column)){
+        return true;
+      }
+    }
+    if(Temp->get_name() == "King"){
+      if(legal_king_move(Temp->Location.get_row(),Temp->Location.get_column(), king_row, king_column)){
+        return true;
+      }
+    }
+    if(Temp->get_name() == "Queen"){
+      if(legal_queen_move(Temp->Location.get_row(),Temp->Location.get_column(), king_row, king_column)){
+        return true;
+      }
+    }
+    if(Temp->get_name() == "Rook"){
+      if(legal_rook_move(Temp->Location.get_row(),Temp->Location.get_column(), king_row, king_column)){
+        return true;
+      }
+    }
+    if(Temp->get_name() == "Knight"){
+      if(legal_knight_move(Temp->Location.get_row(),Temp->Location.get_column(), king_row, king_column)){
+        return true;
+      }
+    }
+    if(Temp->get_name() == "Bishop"){
+      if(legal_bishop_move(Temp->Location.get_row(),Temp->Location.get_column(), king_row, king_column)){
+        return true;
+      }
+    }
+    Temp = Temp->get_Next();
+  }
+
+  Temp = board.white.get_Head();
+  king_row = board.black.find_piece("King").Location.get_row();
+  king_column = board.black.find_piece("King").Location.get_column();
+  while(Temp != NULL){
+    if(Temp->get_name() == "Pawn"){
+      if(legal_pawn_move(Temp->Location.get_row(),Temp->Location.get_column(), king_row, king_column)){
+        return true;
+      }
+    }
+    if(Temp->get_name() == "King"){
+      if(legal_king_move(Temp->Location.get_row(),Temp->Location.get_column(), king_row, king_column)){
+        return true;
+      }
+    }
+    if(Temp->get_name() == "Queen"){
+      if(legal_queen_move(Temp->Location.get_row(),Temp->Location.get_column(), king_row, king_column)){
+        return true;
+      }
+    }
+    if(Temp->get_name() == "Rook"){
+      if(legal_rook_move(Temp->Location.get_row(),Temp->Location.get_column(), king_row, king_column)){
+        return true;
+      }
+    }
+    if(Temp->get_name() == "Knight"){
+      if(legal_bishop_move(Temp->Location.get_row(),Temp->Location.get_column(), king_row, king_column)){
+        return true;
+      }
+    }
+    if(Temp->get_name() == "Bishop"){
+      if(legal_bishop_move(Temp->Location.get_row(),Temp->Location.get_column(), king_row, king_column)){
+        return true;
+      }
+    }
+    Temp = Temp->get_Next();
+  }
+  return false;
+}
+bool Game::is_checkmate(){
+
 }

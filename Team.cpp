@@ -27,8 +27,8 @@ void Team::initialize_team(){
     insert_piece("Rook", team_name,0,0);
     insert_piece("Knight",team_name,0,1);
     insert_piece("Bishop", team_name,0,2);
-    insert_piece("King", team_name,0,3);
     insert_piece("Queen", team_name,0,4);
+    insert_piece("King", team_name,0,3);
     insert_piece("Bishop", team_name,0,5);
     insert_piece("Knight", team_name,0,6);
     insert_piece("Rook", team_name,0,7);
@@ -45,8 +45,8 @@ void Team::initialize_team(){
     insert_piece("Rook", team_name,7,0);
     insert_piece("Knight",team_name,7,1);
     insert_piece("Bishop", team_name,7,2);
-    insert_piece("Queen", team_name,7,3);
-    insert_piece("King", team_name,7,4);
+    insert_piece("Queen", team_name,7,4);
+    insert_piece("King", team_name,7,3);
     insert_piece("Bishop", team_name,7,5);
     insert_piece("Knight", team_name,7,6);
     insert_piece("Rook", team_name,7,7);
@@ -98,4 +98,14 @@ void Team::delete_piece(int row, int col){
     prev->set_Next(temp->get_Next());
     delete temp;
   }
+}
+Piece Team::find_piece(string name){
+  Piece * Temp = Head;
+  while(Temp != NULL){
+    if(Temp->get_name() == name){
+      return *Temp;
+    }
+    Temp = Temp->get_Next();
+  }
+  return *Temp;
 }
