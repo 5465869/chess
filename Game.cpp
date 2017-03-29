@@ -337,8 +337,6 @@ bool Game::legal_rook_move(int r_current, int c_current, int r_move, int c_move)
       }
       while(node_white != NULL)
       {
-        node_white->print_piece_name();
-        node_white->Location.print();
         if(r_move == r_current && node_white->Location.get_row() == r_current)
         {
           if(c_move>c_current)
@@ -371,7 +369,6 @@ bool Game::legal_rook_move(int r_current, int c_current, int r_move, int c_move)
         node_white = node_white->get_Next();
       }
       return true;
-    }else{
     }
   }
   return false;
